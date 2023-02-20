@@ -12,20 +12,24 @@ function App() {
 	const isMobile = useMediaQuery({ query: "(max-width: 770px" });
 
 	return (
-		isMobile && 
-			<div className="flex flex-col h-screen w-screen">
-				<HeaderMobile />
-				<div className="flex-grow"></div>
-				<Bottombar />
+		<div>
+			{isMobile && (
+				<div className="flex flex-col h-screen w-screen">
+					<HeaderMobile />
+					<div className="flex-grow"></div>
+					<Bottombar />
+				</div>
+			)}
+			<div className="flex h-screen w-screen justify-between">
+				{isShrunkDesktop && <SidebarShrink />}
+				{isFullDesktop && <Sidebar />}
+				<div className="main flex">
+					<div className="content flex-grow"></div>
+					<div className="infobar border-2"></div>
+				</div>
 			</div>
-	// <div className="flex h-screen w-screen justify-between">
-	// 	{isShrunkDesktop && <SidebarShrink />}
-	// 	{isFullDesktop && <Sidebar />}
-	// 	<div className="main flex">
-	// 		<div className="content flex-grow"></div>
-	// 		<div className="infobar border-2"></div>
-	// 	</div>
-	// </div>
+		</div>
+	);
 }
 
 export default App;

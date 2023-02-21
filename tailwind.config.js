@@ -6,7 +6,8 @@ module.exports = {
 			colors: {
 				defaultBlack: "#262626",
         defaultGrey: "#8E8E8E",
-        defaultWhite: "#fff"
+        defaultWhite: "#fff",
+        defaultBlue: "#0095F6"
 			},
 		},
 	},

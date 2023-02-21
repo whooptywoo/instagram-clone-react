@@ -14,7 +14,7 @@ import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
 
 export default function Bottombar() {
 	return (
-		<div className="flex bottombar justify-around">
+		<div className="flex bottombar justify-around bottom-0 w-full sticky bg-white py-4 overscroll-none">
 			<div className="flex items-center">
 				<FontAwesomeIcon
 					icon={faHouse}

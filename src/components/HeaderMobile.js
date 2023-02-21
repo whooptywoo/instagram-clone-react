@@ -3,7 +3,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function HeaderMobile() {
 	return (
-		<div className="header-mobile flex items-center justify-between">
+		<div className="header-mobile flex items-center justify-between sticky top-0 bg-white">
 			<div className="logo">
 				<img
 					className="h-full"

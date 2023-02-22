@@ -13,16 +13,32 @@ import Modal from "react-overlays/Modal";
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
 	const [posts, setPosts] = useState([]);
-	var handleClose = () => setShowModal(false);
+	const [newComment, setNewComment] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [postId, setPostId] = useState("");
+	const [postById, setPostById] = useState({
+		user: { username: null },
+		caption: { from: { username: null } },
+	});
+	const handleClose = () => setShowModal(false);
 	const isMobile = useMediaQuery({ query: "(max-width: 770px" });
 
 	const getApiData = async () => {
 		const response = await fetch(
-			"https://api.jsonbin.io/v3/b/63bd23fe15ab31599e3290c1"
-		).then((response) => {
-			response.json();
-		});
-		setPosts(response);
+			// "https://api.jsonbin.io/v3/b/63bd23fe15ab31599e3290c1/"
+			"https://private-479ce-instagramclone3.apiary-mock.com/posts"
+		).then((response) => response.json());
+		setPosts(response.record.data);
+	};
+
+	const getPostById = async (id) => {
+		const response = await fetch(
+			// "https://api.jsonbin.io/v3/b/63bd23fe15ab31599e3290c1/"
+			`https://private-479ce-instagramclone3.apiary-mock.com/posts/${id}`
+		).then((response) => response.json());
+		// console.log(response)
+		setPostById(response.record.data);
+		console.log(postById);
 	};
 
 	useEffect(() => {
@@ -30,9 +46,10 @@ export default function Posts() {
 		getApiData();
 	}, []);
 
-	var handleSave = () => {
-		console.log("success");
-	};
+	function handleNewCommentChange(e) {
+		setNewComment(e.target.value);
+		console.log(newComment)
+	}
 
 	const renderBackdrop = (props) => (
 		<div
@@ -43,7 +60,8 @@ export default function Posts() {
 
 	return (
 		<div className="flex flex-col w-full">
-			{!isMobile ? (
+			{/* {!isMobile && postById ? ( */}
+			{!isMobile && postById ? (
 				<Modal
 					className="modal"
 					show={showModal}
@@ -68,7 +86,10 @@ export default function Posts() {
 											className="img-small"
 										/>
 									</div>
-									<p className="font-bold font-14">albertusrheza</p>
+									<p className="font-bold font-14">
+										{postById.user.username}
+										{/* albertusrheza */}
+									</p>
 								</div>
 								<div className="flex items-center">
 									<FontAwesomeIcon
@@ -86,11 +107,11 @@ export default function Posts() {
 										/>
 
 										<p className="font-14 font-bold">
-											albertusrheza<span> </span>
+											{postById.user.username}
+											{/* albertusrheza */}
+											<span> </span>
 											<span className="font-14 font-normal">
-												A bitter sweet goodbye, thank you for loving Nik’s Pick
-												Hair Tonic!😩💘 A bitter sweet goodbye, thank you for
-												loving Nik’s Pick Hair Tonic!😩💘
+												{postById.caption.text}
 											</span>
 										</p>
 									</div>
@@ -227,12 +248,16 @@ export default function Posts() {
 									<input
 										placeholder="Add a comment..."
 										className="bg-white py-2 px-4 w-full h-full"
+										name="newComment"
+										onChange= {handleNewCommentChange}
 									></input>
-									<input
-										type="submit"
-										value="Post"
-										className="mr-6 text-defaultBlue font-bold font-14 cursor-pointer"
-									></input>
+									{newComment && (
+										<input
+											type="submit"
+											value="Post"
+											className="mr-6 text-defaultBlue font-bold font-14 cursor-pointer"
+										></input>
+									)}
 								</form>
 							</div>
 						</div>
@@ -254,7 +279,7 @@ export default function Posts() {
 										className="img-small"
 									/>
 								</div>
-								<p className="font-bold font-14">albertusrheza</p>
+								<p className="font-bold font-14">{postById.user.username}</p>
 							</div>
 							<div className="flex items-center">
 								<FontAwesomeIcon
@@ -311,6 +336,7 @@ export default function Posts() {
 								<input
 									placeholder="Add a comment..."
 									className="bg-white py-2 px-4 w-full h-full"
+									onChange={handleNewCommentChange}
 								></input>
 								<input
 									type="submit"
@@ -322,79 +348,87 @@ export default function Posts() {
 					</div>
 				</Modal>
 			)}
-			<div className="flex flex-col post">
-				<div className="flex items-center justify-between py-4">
-					<div className="flex gap-2 items-center">
-						<div className="flex items-center justify-center">
+			{posts.map((post) => {
+				return (
+					<div
+						className="flex flex-col post"
+						key={post.id}
+					>
+						<div className="flex items-center justify-between py-4">
+							<div className="flex gap-2 items-center">
+								<div className="flex items-center justify-center">
+									<img
+										src={post.user.profile_picture}
+										className="img-small"
+									/>
+								</div>
+								<p className="font-bold font-14">{post.user.username}</p>
+								<p className="text-defaultGrey font-14 font-extrabold">·</p>
+								<p className="text-defaultGrey font-14">2d</p>
+							</div>
+							<div className="flex items-center">
+								<FontAwesomeIcon
+									icon={faEllipsis}
+									className="sidebar-icon"
+								/>
+							</div>
+						</div>
+						<div className="w-full flex justify-center items-center bg-black">
 							<img
-								src={require("../assets/profile-picture.png")}
-								className="img-small"
+								src={post.images.standard_resolution.url}
+								className="rounded-sm"
 							/>
 						</div>
-						<p className="font-bold font-14">albertusrheza</p>
-						<p className="text-defaultGrey font-14 font-extrabold">·</p>
-						<p className="text-defaultGrey font-14">2d</p>
-					</div>
-					<div className="flex items-center">
-						<FontAwesomeIcon
-							icon={faEllipsis}
-							className="sidebar-icon"
-						/>
-					</div>
-				</div>
-				<div className="w-full">
-					<img
-						src="https://image.shutterstock.com/z/stock-photo-gay-queer-african-man-wearing-makeup-smiling-at-camera-outdoor-nonbinary-and-transgender-lgbtq-2221331023.jpg"
-						className="rounded-sm"
-					/>
-				</div>
-				<div className="w-full flex justify-between py-4">
-					<div className="flex gap-4">
-						<div className="flex items-center">
-							<FontAwesomeIcon
-								icon={faHeart}
-								className="sidebar-icon"
-							/>
+						<div className="w-full flex justify-between py-4">
+							<div className="flex gap-4">
+								<div className="flex items-center">
+									<FontAwesomeIcon
+										icon={faHeart}
+										className="sidebar-icon"
+									/>
+								</div>
+								<div className="flex items-center">
+									<FontAwesomeIcon
+										icon={faComment}
+										className="sidebar-icon"
+									/>
+								</div>
+								<div className="flex items-center">
+									<FontAwesomeIcon
+										icon={faPaperPlane}
+										className="sidebar-icon"
+									/>
+								</div>
+							</div>
+							<div className="flex items-center">
+								<FontAwesomeIcon
+									icon={faBookmark}
+									className="sidebar-icon"
+								/>
+							</div>
 						</div>
-						<div className="flex items-center">
-							<FontAwesomeIcon
-								icon={faComment}
-								className="sidebar-icon"
-							/>
+						<div>
+							<p className="font-14 font-bold">100 likes</p>
 						</div>
-						<div className="flex items-center">
-							<FontAwesomeIcon
-								icon={faPaperPlane}
-								className="sidebar-icon"
-							/>
+						<div className="flex">
+							<p className="font-14 font-bold">
+								{post.caption.from.username}
+								<span> </span>
+								<span className="font-14 font-normal">{post.caption.text}</span>
+							</p>
 						</div>
+						<p
+							className="font-14 text-defaultGrey cursor-pointer"
+							onClick={() => {
+								getPostById(post.id);
+								setShowModal(true);
+							}}
+						>
+							View all 100 comments
+						</p>
 					</div>
-					<div className="flex items-center">
-						<FontAwesomeIcon
-							icon={faBookmark}
-							className="sidebar-icon"
-						/>
-					</div>
-				</div>
-				<div>
-					<p className="font-14 font-bold">100 likes</p>
-				</div>
-				<div className="flex">
-					<p className="font-14 font-bold">
-						albertusrheza<span> </span>
-						<span className="font-14 font-normal">
-							A bitter sweet goodbye, thank you for loving Nik’s Pick Hair
-							Tonic!😩💘
-						</span>
-					</p>
-				</div>
-				<p
-					className="font-14 text-defaultGrey cursor-pointer"
-					onClick={() => setShowModal(true)}
-				>
-					View all 100 comments
-				</p>
-			</div>
+				);
+			})}
 		</div>
 	);
 }

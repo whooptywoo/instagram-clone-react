@@ -16,9 +16,13 @@ code {
 .sidebar {
 	width: 245px;
 	border-style: solid;
-	border-width: 1px;
+	border-right-width: 1px;
 	border-color: "#8E8E8E";
 	padding: 8px 12px 20px 12px;
+}
+
+.sliding-panel {
+  margin-left: 245px;
 }
 
 .bottombar {
@@ -37,6 +41,10 @@ code {
   z-index: 100;
 }
 
+.mobile-content {
+  margin-top: 60px;
+}
+
 .header-mobile input {
 	width: 236px;
 	height: 36px;
@@ -48,6 +56,7 @@ code {
 }
 
 .sidebar-shrink {
+  position: fixed;
 	width: 72px;
 	border-style: solid;
 	border-width: 1px;
@@ -108,15 +117,22 @@ code {
 	border-radius: 50%;
 }
 
+.post {
+  border-bottom-width: 1px;
+  padding-bottom: 20px;
+}
+
 .main {
-	margin: 0 171.5px;
+	/* margin: 0 39.5px; */
 	padding: 4px 0px 0px;
+  position: relative;
 }
 
 .content {
   width: 470px;
 	margin-top: 16px;
   padding-right: 32px;
+  margin-left: 245px;
 }
 
 .story-carousel {
@@ -170,15 +186,27 @@ code {
   font-family: arial;
 }
 
-.modal {
+.modal-mobile {
   position: fixed;
-  height: 90%;
-  width: 1200px;
+  height: 100%;
+  width: 60%;
   z-index: 1040;
   top: 50%;
   left: 50%;
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 9px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	transform: translate(-50%, -50%);
+}
+
+.modal {
+  position: fixed;
+  height: 90%;
+  width: 80%;
+  z-index: 1040;
+  top: 50%;
+  left: 50%;
+  background-color: white;
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 	transform: translate(-50%, -50%);

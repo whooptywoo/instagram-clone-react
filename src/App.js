@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import SidebarShrink from "./components/SidebarShrink";
@@ -7,7 +6,8 @@ import Bottombar from "./components/Bottombar";
 import HeaderMobile from "./components/HeaderMobile";
 import Infobar from "./components/Infobar";
 import StoryCarousel from "./components/StoryCarousel";
-import Posts from "./components/Posts";
+import Posts from "./components/PostContainer";
+// import SlidingPanel from 'react-sliding-side-panel';
 
 function App() {
 	const isShrunkDesktop = useMediaQuery({ query: "(max-width: 1263px" });
@@ -29,7 +29,7 @@ function App() {
 			{isMobile && (
 				<div className="flex flex-col h-screen w-screen relative">
 					<HeaderMobile />
-					<div className="px-5 overscroll-none">
+					<div className="px-5 overscroll-none mobile-content">
 						<StoryCarousel />
 						<Posts />
 					</div>
@@ -48,7 +48,7 @@ function App() {
 							<StoryCarousel />
 							<Posts />
 						</div>
-						<Infobar />
+						{isFullDesktop && <Infobar />}
 					</div>
 				</div>
 			)}

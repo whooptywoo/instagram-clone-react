@@ -11,10 +11,12 @@ import {
 	faSquarePlus,
 } from "@fortawesome/free-regular-svg-icons";
 import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
+import React, { useState } from "react";
 
 export default function Sidebar() {
+	const [openPanel, setOpenPanel] = useState(false);
 	return (
-		<div className="sidebar flex flex-col h-screen">
+		<div className="sidebar flex flex-col h-screen fixed">
 			<div className="logo">
 				<img
 					className="h-full"
@@ -30,7 +32,10 @@ export default function Sidebar() {
 
 					<h1 className="">Home</h1>
 				</div>
-				<div className="flex items-center">
+				<div
+					className="flex items-center"
+					onClick={() => setOpenPanel(true)}
+				>
 					<FontAwesomeIcon
 						icon={faMagnifyingGlass}
 						className="sidebar-icon"

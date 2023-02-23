@@ -24,7 +24,7 @@ export default function Sidebar() {
 				/>
 			</div>
 			<div className="sidebar-list flex flex-col flex-grow">
-				<div className="flex items-center">
+				<div className="flex items-center cursor-pointer">
 					<FontAwesomeIcon
 						icon={faHouse}
 						className="sidebar-icon"
@@ -33,8 +33,7 @@ export default function Sidebar() {
 					<h1 className="">Home</h1>
 				</div>
 				<div
-					className="flex items-center"
-					onClick={() => setOpenPanel(true)}
+					className="flex items-center cursor-pointer"
 				>
 					<FontAwesomeIcon
 						icon={faMagnifyingGlass}
@@ -42,42 +41,42 @@ export default function Sidebar() {
 					/>
 					<h1>Search</h1>
 				</div>
-				<div className="flex items-center">
+				<div className="flex items-center cursor-pointer">
 					<FontAwesomeIcon
 						icon={faCompass}
 						className="sidebar-icon"
 					/>
 					<h1>Explore</h1>
 				</div>
-				<div className="flex items-center">
+				<div className="flex items-center cursor-pointer">
 					<FontAwesomeIcon
 						icon={faClapperboard}
 						className="sidebar-icon"
 					/>
 					<h1>Reels</h1>
 				</div>
-				<div className="flex items-center">
+				<div className="flex items-center cursor-pointer">
 					<FontAwesomeIcon
 						icon={faFacebookMessenger}
 						className="sidebar-icon"
 					/>
 					<h1>Messages</h1>
 				</div>
-				<div className="flex items-center">
+				<div className="flex items-center cursor-pointer">
 					<FontAwesomeIcon
 						icon={faHeart}
 						className="sidebar-icon"
 					/>
 					<h1>Notifications</h1>
 				</div>
-				<div className="flex items-center">
+				<div className="flex items-center cursor-pointer">
 					<FontAwesomeIcon
 						icon={faSquarePlus}
 						className="sidebar-icon"
 					/>
 					<h1>Create</h1>
 				</div>
-				<div className="flex items-center">
+				<div className="flex items-center cursor-pointer">
 					<img
 						src={require("../assets/profile-picture.png")}
 						className="profile-icon"
@@ -85,7 +84,7 @@ export default function Sidebar() {
 					<h1>Profile</h1>
 				</div>
 			</div>
-			<div className="sidebar-list">
+			<div className="sidebar-list cursor-pointer">
 				<div className="flex items-center ">
 					<FontAwesomeIcon
 						icon={faBars}

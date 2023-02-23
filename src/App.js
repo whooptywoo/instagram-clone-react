@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import Bottombar from "./components/Bottombar";
 import HeaderMobile from "./components/HeaderMobile";
 import Infobar from "./components/Infobar";
-import StoryCarousel from "./components/StoryCarousel";
+import StoryCarousel from "./components/StorySlider";
 import Posts from "./components/PostContainer";
 // import SlidingPanel from 'react-sliding-side-panel';
 

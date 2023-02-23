@@ -232,7 +232,7 @@ export default function Posts() {
 								<form className="flex w-full comment-box items-center h-full">
 									<input
 										placeholder="Add a comment..."
-										className="bg-white py-2 px-4 w-full h-full"
+										className="bg-white py-2 px-4 h-full"
 										name="newComment"
 										onChange={handleNewCommentChange}
 									></input>
@@ -240,7 +240,7 @@ export default function Posts() {
 										<input
 											type="submit"
 											value="Post"
-											className="mr-6 text-defaultBlue font-bold font-14 cursor-pointer"
+											className="mr-6 text-defaultBlue font-bold font-14 cursor-pointer ml-48"
 										></input>
 									)}
 								</form>

@@ -34,7 +34,7 @@ export default function StorySlider() {
 					</div>
 					{stories.map((story) => {
 						return (
-							<div className="flex flex-col items-center mr-6">
+							<div className="flex flex-col items-center mr-6 cursor-pointer">
 								<div className="story-container flex items-center justify-center object-contain">
 									<img
 										src={story.profilePicture}

@@ -121,7 +121,7 @@ export default function Posts() {
 						</div>
 						<div className="w-1/2 description relative flex flex-col">
 							<div className="flex justify-between w-full px-4 modal-header sticky top-0">
-								<div className="flex gap-2 items-center py-4 w-full">
+								<div className="flex gap-2 items-center py-4 w-full cursor-pointer">
 									<div className="flex items-center justify-center flex-shrink">
 										<img
 											src={postById.user.profile_picture}
@@ -133,7 +133,7 @@ export default function Posts() {
 										{/* albertusrheza */}
 									</p>
 								</div>
-								<div className="flex items-center">
+								<div className="flex items-center cursor-pointer">
 									<FontAwesomeIcon
 										icon={faEllipsis}
 										className="sidebar-icon"
@@ -141,7 +141,7 @@ export default function Posts() {
 								</div>
 							</div>
 							<div className="flex flex-col flex-grow h-auto">
-								<div className="flex flex-col w-full px-4 pt-4">
+								<div className="flex flex-col w-full px-4 pt-4 cursor-pointer">
 									<div className="flex">
 										<img
 											src={postById.user.profile_picture}
@@ -160,72 +160,6 @@ export default function Posts() {
 								</div>
 
 								<div className="flex flex-col mt-8 w-full px-4 gap-8">
-									{postById.comments.map((comment) => {
-										return (
-											<div
-												className="flex"
-												key={comment.id}
-											>
-												<img
-													// src={require("../assets/profile-picture.png")}
-													src={comment.user.profile_picture}
-													className="img-small mr-4"
-												/>
-
-												<p className="font-14 font-bold">
-													{comment.user.username}
-													<span> </span>
-													<span className="font-14 font-normal">
-														{comment.content}
-													</span>
-												</p>
-											</div>
-										);
-									})}
-									{postById.comments.map((comment) => {
-										return (
-											<div
-												className="flex"
-												key={comment.id}
-											>
-												<img
-													// src={require("../assets/profile-picture.png")}
-													src={comment.user.profile_picture}
-													className="img-small mr-4"
-												/>
-
-												<p className="font-14 font-bold">
-													{comment.user.username}
-													<span> </span>
-													<span className="font-14 font-normal">
-														{comment.content}
-													</span>
-												</p>
-											</div>
-										);
-									})}
-									{postById.comments.map((comment) => {
-										return (
-											<div
-												className="flex"
-												key={comment.id}
-											>
-												<img
-													// src={require("../assets/profile-picture.png")}
-													src={comment.user.profile_picture}
-													className="img-small mr-4"
-												/>
-
-												<p className="font-14 font-bold">
-													{comment.user.username}
-													<span> </span>
-													<span className="font-14 font-normal">
-														{comment.content}
-													</span>
-												</p>
-											</div>
-										);
-									})}
 									{postById.comments.map((comment) => {
 										return (
 											<div
@@ -414,7 +348,7 @@ export default function Posts() {
 						key={post.id}
 					>
 						<div className="flex items-center justify-between py-4">
-							<div className="flex gap-2 items-center">
+							<div className="flex gap-2 items-center cursor-pointer">
 								<div className="flex items-center justify-center">
 									<img
 										src={post.user.profile_picture}
@@ -441,7 +375,7 @@ export default function Posts() {
 						<div className="w-full flex justify-between py-4">
 							<div className="flex gap-4">
 								<div
-									className="flex items-center"
+									className="flex items-center cursor-pointer"
 									// onClick={() => setIsLiked(!isLiked)}
 								>
 									<FontAwesomeIcon
@@ -449,13 +383,13 @@ export default function Posts() {
 										className="sidebar-icon"
 									/>
 								</div>
-								<div className="flex items-center">
+								<div className="flex items-center cursor-pointer">
 									<FontAwesomeIcon
 										icon={faComment}
 										className="sidebar-icon"
 									/>
 								</div>
-								<div className="flex items-center">
+								<div className="flex items-center cursor-pointer">
 									<FontAwesomeIcon
 										icon={faPaperPlane}
 										className="sidebar-icon"
@@ -463,7 +397,7 @@ export default function Posts() {
 								</div>
 							</div>
 							<div
-								className="flex items-center"
+								className="flex items-center cursor-pointer"
 								// onClick={() => setIsSaved(!isSaved)}
 							>
 								<FontAwesomeIcon
@@ -473,7 +407,7 @@ export default function Posts() {
 							</div>
 						</div>
 						<div>
-							<p className="font-14 font-bold">{post.likes} likes</p>
+							<p className="font-14 font-bold cursor-pointer">{post.likes} likes</p>
 						</div>
 						<div className="flex">
 							<p className="font-14 font-bold">
@@ -483,11 +417,11 @@ export default function Posts() {
 							</p>
 						</div>
 						<p
-							className="font-14 text-defaultGrey cursor-pointer"
+							className="font-14 text-defaultGrey cursor-pointer cursor-pointer"
 							onClick={() => {
 								getPostById(post.id);
 								setShowModal(true);
-							}}
+							}} 
 						>
 							View all {post.comments.length} comments
 						</p>

@@ -176,7 +176,7 @@ code {
 
 .modal-mobile {
 	position: fixed;
-	height: 100%;
+	max-height: 100%;
 	width: 60%;
 	z-index: 1040;
 	top: 50%;
@@ -203,6 +203,12 @@ code {
 
 .modal .description {
 	border-left-width: 1px;
+	margin-left: 50%;
+}
+
+.modal-picture {
+	position: absolute;
+	bottom: 0px;
 }
 
 .modal-header {

@@ -4,7 +4,7 @@ import {
 	faHeart as faHeartSolid,
 	faBookmark as faBookmarkSolid,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
 	faHeart,
@@ -17,8 +17,8 @@ import Modal from "react-overlays/Modal";
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
 	const [posts, setPosts] = useState([]);
-	const [isLiked, setIsLiked] = useState(false);
-	const [isSaved, setIsSaved] = useState(false);
+	const [likedPosts, setLikedPosts] = useState([]);
+	const [savedPosts, setSavedPosts] = useState([]);
 	const [newComment, setNewComment] = useState("");
 	const [postById, setPostById] = useState({
 		user: { username: null },
@@ -36,43 +36,23 @@ export default function Posts() {
 		setPosts(response.record.data);
 	};
 
-	let likeButton;
+	const handleLike = (id) => {
+		if (!likedPosts.includes(id)) {
+			likedPosts.push(id);
+			setLikedPosts([...likedPosts]);
+		} else {
+			setLikedPosts(likedPosts.filter((el) => el !== id));
+		}
+	};
 
-	if (isLiked) {
-		likeButton = (
-			<FontAwesomeIcon
-				icon={faHeart}
-				className="sidebar-icon"
-			/>
-		);
-	} else {
-		likeButton = (
-			<FontAwesomeIcon
-				icon={faHeartSolid}
-				className="sidebar-icon"
-				color="red"
-			/>
-		);
-	}
-
-	let saveButton;
-
-	if (isSaved) {
-		saveButton = (
-			<FontAwesomeIcon
-				icon={faBookmark}
-				className="sidebar-icon"
-			/>
-		);
-	} else {
-		saveButton = (
-			<FontAwesomeIcon
-				icon={faBookmarkSolid}
-				className="sidebar-icon"
-				color="red"
-			/>
-		);
-	}
+	const handleSave = (id) => {
+		if (!savedPosts.includes(id)) {
+			savedPosts.push(id);
+			setSavedPosts([...savedPosts]);
+		} else {
+			setSavedPosts(savedPosts.filter((el) => el !== id));
+		}
+	};
 
 	const getPostById = async (id) => {
 		const response = await fetch(
@@ -109,17 +89,16 @@ export default function Posts() {
 					onHide={handleClose}
 					renderBackdrop={renderBackdrop}
 				>
-					<div className="flex w-full h-full">
-						<div className="w-1/2 bg-black">
-							<div className="w-full flex items-center h-full">
+					<div className="bg-black w-full bottom-0">
+						<div className="w-1/2 bg-black h-full fixed modal-picture">
+							<div className="w-full flex items-center h-full top-0">
 								<img
-									// src="https://image.shutterstock.com/z/stock-photo-gay-queer-african-man-wearing-makeup-smiling-at-camera-outdoor-nonbinary-and-transgender-lgbtq-2221331023.jpg"
 									src={postById.images.standard_resolution.url}
 									className=""
 								/>
 							</div>
 						</div>
-						<div className="w-1/2 description relative flex flex-col">
+						<div className="w-1/2 description relative flex flex-col bg-white h-full">
 							<div className="flex justify-between w-full px-4 modal-header sticky top-0">
 								<div className="flex gap-2 items-center py-4 w-full cursor-pointer">
 									<div className="flex items-center justify-center flex-shrink">
@@ -140,7 +119,7 @@ export default function Posts() {
 									/>
 								</div>
 							</div>
-							<div className="flex flex-col flex-grow h-auto">
+							<div className="flex flex-col flex-grow">
 								<div className="flex flex-col w-full px-4 pt-4 cursor-pointer">
 									<div className="flex">
 										<img
@@ -159,7 +138,7 @@ export default function Posts() {
 									</div>
 								</div>
 
-								<div className="flex flex-col mt-8 w-full px-4 gap-8">
+								<div className="flex flex-col mt-8 w-full px-4 gap-8 h-full">
 									{postById.comments.map((comment) => {
 										return (
 											<div
@@ -184,19 +163,32 @@ export default function Posts() {
 									})}
 								</div>
 							</div>
-							<div className="flex flex-col w-full absolute bottom-0 modal-footer h-1/4">
+							<div className="flex flex-col w-full modal-footer h-1/4 fixed bottom-0 bg-white">
 								<div className="w-full flex justify-between py-4 px-4">
 									<div className="flex gap-4">
 										<div
-											className="flex items-center"
-											// onClick={() => {
-											// 	setIsLiked(!isLiked);
-											// }}
+											className="flex items-center cursor-pointer"
+											onClick={() => handleLike(postById.id)}
 										>
-											<FontAwesomeIcon
-												icon={faHeart}
-												className="sidebar-icon"
-											/>
+											{likedPosts.includes(postById.id) ? (
+												<FontAwesomeIcon
+													icon={faHeartSolid}
+													color="red"
+													className="sidebar-icon"
+												/>
+											) : (
+												<FontAwesomeIcon
+													icon={faHeart}
+													className="sidebar-icon"
+												/>
+											)}
+											{/* <FontAwesomeIcon
+										icon={()=> {
+											if (likedPosts.some(post.id) {
+											})
+										}}
+										className="sidebar-icon"
+									/> */}
 										</div>
 										<div className="flex items-center">
 											<FontAwesomeIcon
@@ -212,13 +204,21 @@ export default function Posts() {
 										</div>
 									</div>
 									<div
-										className="flex items-center"
-										// onClick={() => setIsSaved(!isSaved)}
+										className="flex items-center cursor-pointer"
+										onClick={() => handleSave(postById.id)}
 									>
-										<FontAwesomeIcon
-											icon={faBookmark}
-											className="sidebar-icon"
-										/>
+										{savedPosts.includes(postById.id) ? (
+											<FontAwesomeIcon
+												icon={faBookmarkSolid}
+												color="red"
+												className="sidebar-icon"
+											/>
+										) : (
+											<FontAwesomeIcon
+												icon={faBookmark}
+												className="sidebar-icon"
+											/>
+										)}
 									</div>
 								</div>
 								<div>
@@ -286,13 +286,28 @@ export default function Posts() {
 							<div className="w-full flex justify-between py-4 px-4">
 								<div className="flex gap-4">
 									<div
-										className="flex items-center"
-										// onClick={() => setIsLiked(!isLiked)}
+										className="flex items-center cursor-pointer"
+										onClick={() => handleLike(postById.id)}
 									>
-										<FontAwesomeIcon
-											icon={faHeart}
-											className="sidebar-icon"
-										/>
+										{likedPosts.includes(postById.id) ? (
+											<FontAwesomeIcon
+												icon={faHeartSolid}
+												color="red"
+												className="sidebar-icon"
+											/>
+										) : (
+											<FontAwesomeIcon
+												icon={faHeart}
+												className="sidebar-icon"
+											/>
+										)}
+										{/* <FontAwesomeIcon
+										icon={()=> {
+											if (likedPosts.some(post.id) {
+											})
+										}}
+										className="sidebar-icon"
+									/> */}
 									</div>
 									<div className="flex items-center">
 										<FontAwesomeIcon
@@ -308,13 +323,20 @@ export default function Posts() {
 									</div>
 								</div>
 								<div
-									className="flex items-center"
-									// onClick={() => setIsSaved(!isSaved)}
+									className="flex items-center cursor-pointer"
+									onClick={() => handleSave(postById.id)}
 								>
-									<FontAwesomeIcon
-										icon={faBookmark}
-										className="sidebar-icon"
-									/>
+									{savedPosts.includes(postById.id) ? (
+										<FontAwesomeIcon
+											icon={faBookmarkSolid}
+											className="sidebar-icon"
+										/>
+									) : (
+										<FontAwesomeIcon
+											icon={faBookmark}
+											className="sidebar-icon"
+										/>
+									)}
 								</div>
 							</div>
 							<div>
@@ -376,12 +398,20 @@ export default function Posts() {
 							<div className="flex gap-4">
 								<div
 									className="flex items-center cursor-pointer"
-									// onClick={() => setIsLiked(!isLiked)}
+									onClick={() => handleLike(post.id)}
 								>
-									<FontAwesomeIcon
-										icon={faHeart}
-										className="sidebar-icon"
-									/>
+									{likedPosts.includes(post.id) ? (
+										<FontAwesomeIcon
+											icon={faHeartSolid}
+											color="red"
+											className="sidebar-icon"
+										/>
+									) : (
+										<FontAwesomeIcon
+											icon={faHeart}
+											className="sidebar-icon"
+										/>
+									)}
 								</div>
 								<div className="flex items-center cursor-pointer">
 									<FontAwesomeIcon
@@ -398,16 +428,25 @@ export default function Posts() {
 							</div>
 							<div
 								className="flex items-center cursor-pointer"
-								// onClick={() => setIsSaved(!isSaved)}
+								onClick={() => handleSave(post.id)}
 							>
-								<FontAwesomeIcon
-									icon={faBookmark}
-									className="sidebar-icon"
-								/>
+								{savedPosts.includes(post.id) ? (
+									<FontAwesomeIcon
+										icon={faBookmarkSolid}
+										className="sidebar-icon"
+									/>
+								) : (
+									<FontAwesomeIcon
+										icon={faBookmark}
+										className="sidebar-icon"
+									/>
+								)}
 							</div>
 						</div>
 						<div>
-							<p className="font-14 font-bold cursor-pointer">{post.likes} likes</p>
+							<p className="font-14 font-bold cursor-pointer">
+								{post.likes} likes
+							</p>
 						</div>
 						<div className="flex">
 							<p className="font-14 font-bold">
@@ -417,11 +456,11 @@ export default function Posts() {
 							</p>
 						</div>
 						<p
-							className="font-14 text-defaultGrey cursor-pointer cursor-pointer"
+							className="font-14 text-defaultGrey cursor-pointer"
 							onClick={() => {
 								getPostById(post.id);
 								setShowModal(true);
-							}} 
+							}}
 						>
 							View all {post.comments.length} comments
 						</p>
